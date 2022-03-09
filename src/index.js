@@ -57,7 +57,7 @@ class FindResourcePlugin {
     };
   }
 
-  async handleVariable({ address: name }) {
+  async handleVariable({ address: name, params }) {
     const segments = name.split(":")
     const resourceType = segments[0]
 
@@ -68,7 +68,8 @@ class FindResourcePlugin {
       }
 
       const transformed = await Static.this.handlers[resourceType](
-        resourceName
+        resourceName,
+        params ? params[0] : undefined
       );
       if (!transformed) {
         Static.this.serverless.cli.log(
